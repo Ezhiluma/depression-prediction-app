@@ -10,31 +10,31 @@ from sklearn.ensemble import RandomForestClassifier
 # --- Custom CSS ---
 st.markdown("""
 <style>
-/* Page background in mild peach */
+/* Page background in mild light pink */
 .stApp {
-    background-color: #ffeedd;  /* light peach */
+    background-color: #ffe6f0;  /* light pink */
     color: #333333;
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Headers */
+/* Titles */
 h1, h2, h3 {
     color: #000000 !important;
     font-weight: 700 !important;
 }
 
-/* Labels for input fields */
+/* Input field labels */
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
     color: #000000 !important;
     margin-bottom: 6px !important;
-    background: transparent !important;
+    background: transparent !important;  /* remove colored box */
     padding: 0 !important;
     border-radius: 0 !important;
 }
 
-/* Input boxes styling */
+/* Input boxes */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
     background-color: #ffffff !important;
     border: 1px solid #cfd8dc !important;
@@ -44,14 +44,14 @@ label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
 }
 
-/* Consistent spacing */
+/* Spacing */
 .stNumberInput, .stSelectbox, .stTextInput {
     margin-bottom: 18px !important;
 }
 
 /* Buttons */
 div.stButton > button:first-child {
-    background-color: #8ecae6;
+    background-color: #f78da7;
     color: #ffffff;
     border-radius: 8px;
     padding: 6px 12px;
@@ -59,7 +59,7 @@ div.stButton > button:first-child {
     border: none;
 }
 div.stButton > button:first-child:hover {
-    background-color: #219ebc;
+    background-color: #d94f73;
 }
 
 /* Alerts */
