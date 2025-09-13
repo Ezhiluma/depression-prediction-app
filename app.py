@@ -19,7 +19,7 @@ def train_model(df, target, cat_features, num_features):
     model.fit(X, y)
     return model
 
-# Page background + text color
+# Page background + text color + subheader styling
 st.markdown(
     """
     <style>
@@ -29,6 +29,12 @@ st.markdown(
         }
         * {
             color: black !important;
+        }
+        /* Subheaders inside pink box */
+        h2 {
+            background-color: #FFD6E7;  /* light pink */
+            padding: 8px 12px;
+            border-radius: 8px;
         }
     </style>
     """,
@@ -77,7 +83,7 @@ if st.button("Predict"):
 
     if pred == 1:
         st.markdown("⚠ **You may be experiencing symptoms of depression.**")
-        st.markdown("### Suggestions:")
+        st.subheader("Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
             "Consider speaking with a mental health professional",
@@ -89,7 +95,7 @@ if st.button("Predict"):
         st.balloons()
     else:
         st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
-        st.markdown("### Keep these up:")
+        st.subheader("Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
             "Stay connected with friends & family — social support matters.",
