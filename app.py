@@ -7,62 +7,55 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS ---
+# --- Custom CSS (uniform sandal + black) ---
 st.markdown("""
 <style>
-/* Page background */
+/* Whole app background */
 .stApp {
-    background-color: #f5e6cc;  /* sandal */
+    background-color: #f5e6cc !important; /* sandal */
+    color: #000000 !important;            /* black text */
     font-family: 'Segoe UI', sans-serif;
-    color: #000000;
 }
 
-/* Titles (mild blue) */
+/* Titles */
 h1, h2, h3, h4, h5, h6 {
-    color: #4a6fa5 !important;
+    color: #000000 !important; /* black */
     font-weight: 700 !important;
 }
 
-/* Labels */
-label, .stNumberInput label, .stSelectbox label {
-    font-weight: 700 !important;
-    color: #000000 !important;
-    margin-bottom: 6px !important;
+/* Labels and text */
+label, .stMarkdown, .stText, .stNumberInput label, .stSelectbox label {
+    color: #000000 !important; /* black */
+    font-weight: 600 !important;
 }
 
-/* 🔴 Input widgets → single pink, no double borders */
+/* Inputs uniform (no double border) */
 input, textarea, select, .stTextInput input, .stNumberInput input,
 .stSelectbox div[role="button"], .stSelectbox div[data-baseweb="select"],
 .stRadio div[role="radiogroup"], .stMultiSelect div[role="combobox"] {
-    background-color: #ffe6f0 !important;  /* pink */
-    border: none !important;
+    background-color: #f5e6cc !important; /* same sandal */
+    border: 1px solid #000000 !important; /* thin black border */
     border-radius: 6px !important;
     color: #000000 !important;
-    font-weight: 500 !important;
     box-shadow: none !important;
 }
 
 /* Dropdown options */
 [data-baseweb="popover"] {
-    background-color: #ffe6f0 !important;
+    background-color: #f5e6cc !important;
     color: #000000 !important;
-    border: none !important;
+    border: 1px solid #000000 !important;
 }
 
 /* Dataset preview */
 .stDataFrame, .dataframe {
-    background-color: #f5e6cc !important; /* sandal */
-    color: #000000 !important;
-    border-radius: 8px;
-}
-.dataframe th {
     background-color: #f5e6cc !important;
     color: #000000 !important;
-    font-weight: 700 !important;
 }
-.dataframe td {
+.dataframe th, .dataframe td {
     background-color: #f5e6cc !important;
     color: #000000 !important;
+    border: 1px solid #000000 !important;
 }
 </style>
 """, unsafe_allow_html=True)
