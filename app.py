@@ -12,14 +12,14 @@ st.markdown("""
 <style>
 /* Page background */
 .stApp {
-    background-color: #fff5e1;  /* sandal / light peach */
+    background-color: #f5e6cc;  /* sandal */
     font-family: 'Segoe UI', sans-serif;
     color: #444444;
 }
 
-/* Titles */
+/* Titles (mild blue) */
 h1, h2, h3, h4, h5, h6 {
-    color: #2c3e73 !important; 
+    color: #4a6fa5 !important; 
     font-weight: 700 !important;
 }
 
@@ -27,52 +27,40 @@ h1, h2, h3, h4, h5, h6 {
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
-    color: #000000 !important;  
+    color: #000000 !important;  /* black */
     margin-bottom: 6px !important;
 }
 
-/* Input boxes - only pink */
+/* Input boxes (only mild pink, no double color) */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-    background-color: #ffe6f2 !important; /* mild pink */
+    background-color: #ffe6f0 !important; /* mild pink */
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    color: #000000 !important; 
+    color: #000000 !important;
     font-weight: 500 !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
-    background-color: #ffe6f2 !important; 
+    background-color: #ffe6f0 !important;
     color: #000000 !important; 
 }
 
-/* Dataset preview container */
-.stDataFrameContainer, .element-container {
-    background-color: #fff5e1 !important; 
+/* Dataset preview container box */
+.stDataFrame, .dataframe {
+    background-color: #f5e6cc !important; /* sandal */
+    color: #000000 !important;            /* black text */
     border-radius: 8px;
-    padding: 12px;
 }
-
-/* Dataset preview cells and headers */
-.stDataFrame th, .stDataFrame td {
-    background-color: #fff5e1 !important; 
-    color: #000000 !important;             
-    font-weight: 700 !important;           
-    padding: 8px !important;
+.dataframe th {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+    font-weight: 700 !important;
 }
-
-/* Button styling */
-div.stButton > button:first-child {
-    background-color: #4a6fa5;
-    color: white;
-    font-weight: bold;
-    border-radius: 8px;
-    padding: 10px 20px;
-}
-div.stButton > button:first-child:hover {
-    background-color: #36527a;
-    color: #fff;
+.dataframe td {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -120,7 +108,7 @@ if not os.path.exists(data_path):
 
 df = load_default_data(data_path)
 st.subheader("Dataset preview:")
-st.write(df.head())
+st.dataframe(df.head(), use_container_width=True)
 
 target_column = "Depression"
 if target_column not in df.columns:
@@ -155,7 +143,7 @@ for c in feature_cols:
         options = df[c].dropna().unique().tolist()
         user_input[c] = st.selectbox(f"{c}", options)
 
-# --- Prediction Block with Notes + Balloons ---
+# --- Prediction ---
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
@@ -173,7 +161,6 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
-
     else:
         st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
