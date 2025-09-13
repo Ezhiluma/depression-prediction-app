@@ -14,12 +14,12 @@ st.markdown("""
 .stApp {
     background-color: #f5e6cc;  /* sandal / light peach */
     font-family: 'Segoe UI', sans-serif;
-    color: #444444; /* mild grey for normal text */
+    color: #444444;
 }
 
-/* Titles (mild blue/grey) */
+/* Titles (mild blue) */
 h1, h2, h3, h4, h5, h6 {
-    color: #4a6fa5 !important; /* soft blue */
+    color: #4a6fa5 !important; 
     font-weight: 700 !important;
 }
 
@@ -27,45 +27,39 @@ h1, h2, h3, h4, h5, h6 {
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
-    color: #000000 !important;  /* ONLY labels are black */
+    color: #000000 !important;  /* labels black */
     margin-bottom: 6px !important;
-    background: transparent !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
 }
 
-/* Input boxes */
+/* Input boxes (mild pink) */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-    background-color: #ffffff !important;
+    background-color: #ffe6f0 !important; /* mild pink */
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    color: #333333 !important; /* dark grey text */
+    color: #000000 !important; /* black text */
     font-weight: 500 !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
-    background-color: #ffffff !important;
-    color: #333333 !important;
+    background-color: #ffe6f0 !important; /* mild pink for options too */
+    color: #000000 !important; 
 }
 
-/* Prediction messages box */
-.stAlert {
-    background-color: #ffe6f0 !important; /* light pink */
-    color: #333333 !important;  /* grey text */
-    border-radius: 12px;
+/* Dataset preview container box */
+.stDataFrameContainer, .element-container {
+    background-color: #f5e6cc !important; /* sandal */
+    border-radius: 8px;
     padding: 12px;
-    font-weight: 600;
 }
 
-/* Dataset preview (sandal background for headers and cells, black text) */
+/* Dataset preview cells and headers */
 .stDataFrame th, .stDataFrame td {
-    background-color: #f5e6cc !important;  /* sandal / light peach */
+    background-color: #f5e6cc !important; /* same as container */
     color: #000000 !important;             /* black text */
     font-weight: 700 !important;           /* headers bold */
     padding: 8px !important;
-    border-radius: 4px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -155,7 +149,7 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.error("⚠ You may be experiencing symptoms of depression.")
+        st.markdown("⚠ **You may be experiencing symptoms of depression.**")
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -165,9 +159,8 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()
     else:
-        st.success("🙂 You do *not* appear to be showing strong signs of depression.")
+        st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
@@ -178,4 +171,3 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()
