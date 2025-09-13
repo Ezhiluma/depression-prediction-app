@@ -59,8 +59,9 @@ div[data-baseweb="select"] > div {
 }
 
 /* Dropdown selected value text */
-div[data-baseweb="select"] span {
-    color: #000000 !important;
+div[data-baseweb="select"] span,
+div[data-baseweb="select"] div {
+    color: #000000 !important;   /* Force black text */
     font-size: 16px !important;
     font-weight: 500 !important;
 }
@@ -75,7 +76,7 @@ div[data-baseweb="popover"] {
 /* Dropdown options */
 div[data-baseweb="option"] {
     background-color: #ffe6f0 !important;
-    color: #000000 !important;
+    color: #000000 !important;   /* black text in options */
     font-size: 16px !important;
     padding: 10px !important;
 }
