@@ -7,34 +7,41 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS for mild colors ---
+# --- Custom CSS for mild modern styling ---
 st.markdown(
     """
     <style>
-    /* Page background */
+    /* Page background and text */
     .stApp {
-        background-color: #f9f9f9;
-        color: #333333;
+        background-color: #f0f4f8;
+        color: #1a1a1a;
     }
-    /* Headers mild blue */
-    h1, h2, h3, h4 {
-        color: #3a6ea5;
+    /* Headers */
+    h1, h2, h3 {
+        color: #4a6fa5;
     }
     /* Buttons */
     div.stButton > button:first-child {
-        background-color: #a3c1d1;
-        color: #ffffff;
+        background-color: #6fa8dc;
+        color: white;
+        border-radius: 10px;
+        padding: 5px 10px;
+        font-weight: bold;
+    }
+    div.stButton > button:first-child:hover {
+        background-color: #547aa0;
     }
     /* Input boxes */
     .stNumberInput input, .stSelectbox select {
         background-color: #ffffff;
         border: 1px solid #cfd8dc;
-        border-radius: 5px;
-        padding: 5px;
-    }
-    /* Info boxes */
-    .stAlert {
         border-radius: 8px;
+        padding: 6px;
+    }
+    /* Prediction boxes */
+    .stAlert {
+        border-radius: 12px;
+        padding: 12px;
     }
     </style>
     """, unsafe_allow_html=True
@@ -48,7 +55,7 @@ def load_default_data(path):
     return df
 
 # --- Model training ---
-@st.cache_resource
+@st.cache_data
 def train_model(df, target_column, cat_features, num_features):
     X = df[cat_features + num_features]
     y = df[target_column]
@@ -73,11 +80,10 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
-# --- Streamlit app layout ---
+# --- Streamlit App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
-# --- Dataset path ---
 data_path = "depression.csv"
 if not os.path.exists(data_path):
     st.error(f"Dataset {data_path} not found in app folder.")
@@ -99,7 +105,7 @@ num_features = [c for c in feature_cols if pd.api.types.is_numeric_dtype(df[c])]
 
 st.subheader("Enter your details:")
 
-# --- User input form ---
+# --- User input ---
 user_input = {}
 for c in feature_cols:
     if c in num_features:
@@ -127,7 +133,7 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.error("⚠️ You may be experiencing symptoms of depression.")
+        st.error("⚠ You may be experiencing symptoms of depression.")
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -138,7 +144,7 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
     else:
-        st.success("🙂 You do **not** appear to be showing strong signs of depression.")
+        st.success("🙂 You do *not* appear to be showing strong signs of depression.")
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
