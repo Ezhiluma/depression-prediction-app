@@ -51,7 +51,7 @@ label, .stNumberInput label, .stSelectbox label {
 /* Dropdown CLOSED box */
 div[data-baseweb="select"] > div {
     background-color: #ffe6f0 !important;
-    border: 1px solid #ffe6f0 !important;
+    border: 0px solid #ffe6f0 !important;
     border-radius: 6px !important;
     padding: 10px 12px !important;
     font-size: 16px !important;
@@ -206,3 +206,4 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
+
