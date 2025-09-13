@@ -1,89 +1,151 @@
 import streamlit as st
 import pandas as pd
+import numpy as np
+import os
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# Load dataset
-df = pd.read_csv("depression.csv")
-
-# Target and features
-target_column = "Depression"
-cat_features = ["Gender", "City", "Profession"]
-num_features = ["Age", "Academic Pressure", "Work Pressure", "CGPA"]
-
-# Train model
-def train_model(df, target, cat_features, num_features):
-    df_encoded = pd.get_dummies(df[cat_features + num_features])
-    X = df_encoded
-    y = df[target]
-    model = RandomForestClassifier()
-    model.fit(X, y)
-    return model
-
-# Page background + text color + subheader styling
-st.markdown(
-    """
-    <style>
-        .stApp {
-            background-color: #FAEBD7; /* sandal */
-            color: black !important;
-        }
-        * {
-            color: black !important;
-        }
-        /* Subheaders inside pink box */
-        h2 {
-            background-color: #FFD6E7;  /* light pink */
-            padding: 8px 12px;
-            border-radius: 8px;
-        }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-# Title
-st.title("Depression Prediction App")
-
-# Show dataset
-st.subheader("Dataset preview:")
-st.dataframe(df)
-
-# User input
-st.subheader("Enter your details:")
-
-user_input = {
-    "id": st.number_input("id", value=70684.00),
-    "Gender": st.selectbox("Gender", df["Gender"].unique().tolist()),
-    "Age": st.number_input("Age", value=25.0),
-    "City": st.selectbox("City", df["City"].unique().tolist()),
-    "Profession": st.selectbox("Profession", df["Profession"].unique().tolist()),
-    "Academic Pressure": st.number_input("Academic Pressure", value=3.0),
-    "Work Pressure": st.number_input("Work Pressure", value=0.0),
-    "CGPA": st.number_input("CGPA", value=7.5),
-    "Sleep Duration": st.number_input("Sleep Duration", value=7.0),
-    "Dietary Habits": st.selectbox("Dietary Habits", df["Dietary Habits"].unique().tolist() if "Dietary Habits" in df.columns else ["Healthy","Unhealthy"]),
-    "Degree": st.text_input("Degree", "B.Pharm"),
-    "Suicidal Thoughts": st.selectbox("Have you ever had suicidal thoughts ?", ["Yes", "No"]),
-    "Work/Study Hours": st.number_input("Work/Study Hours", value=8.0),
-    "Financial Stress": st.number_input("Financial Stress", value=3.0),
-    "Family History of Mental Illness": st.selectbox("Family History of Mental Illness", ["Yes", "No"])
+# --- Custom CSS for uniform theme ---
+st.markdown("""
+<style>
+/* Page background sandal, text black */
+.stApp {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-# Prediction
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Labels */
+label, .stNumberInput label, .stSelectbox label {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Input boxes (uniform pink) */
+.stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
+    background-color: #ffe6f0 !important; /* pink */
+    color: #000000 !important;  /* black text */
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    font-weight: 500 !important;
+}
+
+/* Remove black +/- box for number inputs */
+.stNumberInput button {
+    background-color: #ffe6f0 !important;
+    color: #000000 !important;
+    border: none !important;
+}
+
+/* Dropdown menu options also pink */
+div[data-baseweb="popover"] {
+    background-color: #ffe6f0 !important;
+    color: #000000 !important;
+}
+
+/* Dataset preview */
+.stDataFrameContainer, .element-container {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# --- Cache dataset loading ---
+@st.cache_data
+def load_default_data(path):
+    df = pd.read_csv(path)
+    df.columns = df.columns.str.strip()
+    return df
+
+# --- Cache model training ---
+@st.cache_data
+def train_model(df, target_column, cat_features, num_features):
+    X = df[cat_features + num_features]
+    y = df[target_column]
+
+    cat_transformer = Pipeline([
+        ("ohe", OneHotEncoder(handle_unknown='ignore', sparse_output=False))
+    ])
+    num_transformer = Pipeline([
+        ("scaler", StandardScaler())
+    ])
+
+    preprocessor = ColumnTransformer([
+        ("cat", cat_transformer, cat_features),
+        ("num", num_transformer, num_features)
+    ])
+
+    clf = Pipeline([
+        ("preprocessor", preprocessor),
+        ("classifier", RandomForestClassifier())
+    ])
+    clf.fit(X, y)
+    return clf
+
+# --- Main Streamlit App ---
+st.set_page_config(page_title="Depression Predictor", layout="centered")
+st.title("Depression Prediction App")
+
+data_path = "depression.csv"
+if not os.path.exists(data_path):
+    st.error(f"Dataset {data_path} not found in app folder.")
+    st.stop()
+
+df = load_default_data(data_path)
+st.subheader("Dataset preview:")
+st.write(df.head())
+
+target_column = "Depression"
+if target_column not in df.columns:
+    st.error(f"Target column '{target_column}' not found.")
+    st.stop()
+
+# Features
+feature_cols = [c for c in df.columns if c != target_column]
+cat_features = [c for c in feature_cols if not pd.api.types.is_numeric_dtype(df[c])]
+num_features = [c for c in feature_cols if pd.api.types.is_numeric_dtype(df[c])]
+
+st.subheader("Enter your details:")
+
+# User input
+user_input = {}
+for c in feature_cols:
+    if c in num_features:
+        col_series = df[c].dropna()
+        min_val = float(col_series.min())
+        max_val = float(col_series.max())
+        default_val = float(col_series.median())
+        step_val = 0.1 if (max_val - min_val) < 1 else 1.0
+        user_input[c] = st.number_input(
+            f"{c}",
+            min_value=min_val,
+            max_value=max_val,
+            value=default_val,
+            step=step_val,
+            format="%.2f"
+        )
+    else:
+        options = df[c].dropna().unique().tolist()
+        user_input[c] = st.selectbox(f"{c}", options)
+
+# Predict
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
-
-    # Match encoding
-    input_encoded = pd.get_dummies(input_df[cat_features + num_features])
-    train_encoded = pd.get_dummies(df[cat_features + num_features])
-    input_encoded = input_encoded.reindex(columns=train_encoded.columns, fill_value=0)
-
-    pred = model.predict(input_encoded)[0]
+    pred = model.predict(input_df)[0]
 
     if pred == 1:
         st.markdown("⚠ **You may be experiencing symptoms of depression.**")
-        st.subheader("Suggestions:")
+        st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
             "Consider speaking with a mental health professional",
@@ -95,7 +157,7 @@ if st.button("Predict"):
         st.balloons()
     else:
         st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
-        st.subheader("Keep these up:")
+        st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
             "Stay connected with friends & family — social support matters.",
