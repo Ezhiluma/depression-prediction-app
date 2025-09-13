@@ -23,29 +23,30 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels: only black text */
+/* Labels: black text only */
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
     background: transparent !important;
     padding: 0px !important;
-    margin-bottom: 4px !important;  /* spacing between label & box */
+    margin-bottom: 6px !important;  /* keep labels above inputs */
 }
 
-/* Inputs: pink */
+/* Inputs: pink only, no extra border box */
 .stTextInput, .stNumberInput, .stSelectbox {
-    background-color: #ffe6f0 !important;
-    border: 1px solid #ffe6f0 !important;
-    border-radius: 6px !important;
-    padding: 4px !important;
-    margin-bottom: 12px !important;  /* space below each box */
+    background-color: transparent !important;
+    border: none !important;
+    padding: 0px !important;
+    margin-bottom: 14px !important;
 }
 
-/* Text inside inputs */
+/* Input fields themselves */
 .stTextInput input, .stNumberInput input {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
-    border: none !important;
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    padding: 6px !important;
     font-weight: 500 !important;
 }
 
@@ -56,15 +57,16 @@ label, .stNumberInput label, .stSelectbox label {
     border: none !important;
 }
 
-/* Dropdown closed box */
+/* Dropdown closed */
 div[data-baseweb="select"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
+    padding: 4px !important;
 }
 
-/* Dropdown expanded menu */
+/* Dropdown expanded */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
@@ -76,7 +78,7 @@ div[data-baseweb="option"] {
     color: #000000 !important;
 }
 div[data-baseweb="option"]:hover {
-    background-color: #f5c6d6 !important; /* darker pink on hover */
+    background-color: #f5c6d6 !important;
 }
 
 /* Predict button: black with white text */
@@ -86,6 +88,7 @@ div.stButton > button {
     font-weight: bold !important;
     border-radius: 8px !important;
     border: none !important;
+    padding: 8px 16px !important;
 }
 div.stButton > button:hover {
     background-color: #333333 !important;
