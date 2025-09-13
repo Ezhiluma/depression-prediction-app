@@ -7,7 +7,6 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS (Uniform Sandal + Black, no dark boxes) ---
 st.markdown("""
 <style>
 /* Whole app background */
@@ -44,14 +43,14 @@ input, textarea, select,
     font-weight: 500 !important;
 }
 
-/* Dropdown menu (remove black) */
+/* Remove dark dropdown background */
 [data-baseweb="popover"] {
     background-color: #f5e6cc !important;
     color: #000000 !important;
     border: 1px solid #000000 !important;
 }
 
-/* Dropdown options */
+/* Fix dropdown options */
 [data-baseweb="option"] {
     background-color: #f5e6cc !important;
     color: #000000 !important;
@@ -86,6 +85,7 @@ input, textarea, select,
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # --- Cache dataset loading ---
 @st.cache_data
@@ -196,3 +196,4 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
+
