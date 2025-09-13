@@ -47,6 +47,24 @@ div.stButton > button:first-child:hover {
     border-radius: 12px;
     padding: 10px;
 }
+
+/* Dataframe / Table styling */
+.stDataFrame, .stTable {
+    background-color: #ffffff !important;
+    color: #333333 !important;
+    border: 1px solid #cfd8dc;
+    border-radius: 8px;
+    padding: 10px;
+}
+.stDataFrame th, .stTable th {
+    background-color: #8ecae6 !important;
+    color: #ffffff !important;
+    font-weight: bold;
+}
+.stDataFrame td, .stTable td {
+    background-color: #f1f8ff !important;
+    color: #000000 !important;
+}
 </style>
 """, unsafe_allow_html=True)
 
