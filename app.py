@@ -19,45 +19,6 @@ def train_model(df, target, cat_features, num_features):
     model.fit(X, y)
     return model
 
-# Custom CSS for uniform look
-st.markdown("""
-<style>
-/* Background */
-.stApp {
-    background-color: #faebd7; /* sandal */
-    color: black !important;
-}
-
-/* All text black */
-* {
-    color: black !important;
-}
-
-/* Input boxes uniform pink */
-.stNumberInput input, .stSelectbox div[data-baseweb="select"], 
-.stTextInput input, .stTextArea textarea {
-    background-color: #ffe4ef !important;
-    color: black !important;
-    border-radius: 8px;
-    border: 1px solid #d3d3d3 !important;
-}
-
-/* Dataset preview uniform */
-[data-testid="stDataFrame"] {
-    background-color: #faebd7 !important;
-    color: black !important;
-}
-
-/* Buttons */
-.stButton>button {
-    background-color: #ffe4ef !important;
-    color: black !important;
-    border-radius: 8px;
-    border: 1px solid #d3d3d3 !important;
-}
-</style>
-""", unsafe_allow_html=True)
-
 # Title
 st.title("Depression Prediction App")
 
