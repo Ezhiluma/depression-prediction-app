@@ -23,7 +23,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels: only text */
+/* Labels */
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
@@ -31,15 +31,7 @@ label, .stNumberInput label, .stSelectbox label {
     margin-bottom: 6px !important;
 }
 
-/* Containers stripped */
-.stTextInput, .stNumberInput, .stSelectbox {
-    background: transparent !important;
-    border: none !important;
-    padding: 0px !important;
-    margin-bottom: 14px !important;
-}
-
-/* Text & number inputs */
+/* Text & number input fields */
 .stTextInput input, .stNumberInput input {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
@@ -55,16 +47,16 @@ label, .stNumberInput label, .stSelectbox label {
     border: none !important;
 }
 
-/* Dropdown closed */
-div[data-baseweb="select"] {
+/* Dropdown CLOSED box */
+div[data-baseweb="select"] > div {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
     color: #000000 !important;
-    padding: 4px !important;
+    padding: 6px !important;
 }
 
-/* Dropdown expanded */
+/* Dropdown menu when expanded */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
