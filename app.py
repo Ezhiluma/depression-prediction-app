@@ -14,21 +14,22 @@ st.markdown("""
 .stApp {
     background-color: #f5e6cc;  /* sandal / light peach */
     font-family: 'Segoe UI', sans-serif;
+    color: #444444; /* mild grey for normal text */
 }
 
-/* Titles */
+/* Titles (not black, mild blue/grey) */
 h1, h2, h3, h4, h5, h6 {
-    color: #000000 !important;
+    color: #4a6fa5 !important; /* soft blue */
     font-weight: 700 !important;
 }
 
-/* Labels (questions/topics) */
+/* Labels (questions under Enter your details) */
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
-    color: #000000 !important;
+    color: #000000 !important;  /* ONLY labels are black */
     margin-bottom: 6px !important;
-    background: transparent !important;  /* remove black box */
+    background: transparent !important;
     padding: 0 !important;
     border-radius: 0 !important;
 }
@@ -39,20 +40,20 @@ label, .stNumberInput label, .stSelectbox label {
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    color: #000000 !important;
+    color: #333333 !important; /* dark grey text */
     font-weight: 500 !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
     background-color: #ffffff !important;
-    color: #000000 !important;
+    color: #333333 !important;
 }
 
 /* Prediction messages box */
 .stAlert {
     background-color: #ffe6f0 !important; /* light pink */
-    color: #000000 !important;
+    color: #333333 !important;  /* grey text */
     border-radius: 12px;
     padding: 12px;
     font-weight: 600;
@@ -155,7 +156,7 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()  # 🎈 balloons fly
+        st.balloons()
     else:
         st.success("🙂 You do *not* appear to be showing strong signs of depression.")
         st.markdown("### Keep these up:")
@@ -168,4 +169,4 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()  # 🎈 balloons fly
+        st.balloons()
