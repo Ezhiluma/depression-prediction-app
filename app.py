@@ -30,10 +30,12 @@ label, .stNumberInput label, .stSelectbox label {
 }
 
 /* Input boxes (uniform solid pink) */
-.stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
+.stNumberInput input, .stTextInput input,
+.stSelectbox div[data-baseweb="select"],
+div[role="combobox"] {
     background-color: #ffe6f0 !important; /* solid pink */
     color: #000000 !important;  /* black text */
-    border: 1px solid #ffe6f0 !important; /* remove border difference */
+    border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
     font-weight: 500 !important;
 }
