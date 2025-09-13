@@ -7,43 +7,34 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS ---
+# --- Custom CSS (works with latest Streamlit) ---
 st.markdown("""
 <style>
 /* Page background */
 .stApp {
     background-color: #f5e6cc;  /* sandal */
     font-family: 'Segoe UI', sans-serif;
-    color: #000000; /* black text */
+    color: #000000;
 }
 
-/* Titles (black) */
+/* Titles (mild blue) */
 h1, h2, h3, h4, h5, h6 {
     color: #4a6fa5 !important;
     font-weight: 700 !important;
 }
 
-/* Labels */
-label, .stNumberInput label, .stSelectbox label {
-    font-weight: 700 !important;
-    color: #000000 !important;
-    margin-bottom: 6px !important;
-}
-
-/* Input boxes (only pink, no double layers) */
-.stNumberInput input, .stTextInput input, 
-.stSelectbox div[data-baseweb="select"] {
+/* Input fields (single pink box, no double borders) */
+input, textarea, select {
     background-color: #ffe6f0 !important;  /* pink */
-    border: 1px solid #ffe6f0 !important;  /* same color → flat look */
-    border-radius: 6px !important;
-    padding: 6px !important;
     color: #000000 !important;
-    font-weight: 500 !important;
+    border: 1px solid #ffe6f0 !important;  /* same as background */
+    border-radius: 6px !important;
     box-shadow: none !important;
+    font-weight: 500 !important;
 }
 
 /* Dropdown menu options */
-div[data-baseweb="popover"] {
+[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: 1px solid #ffe6f0 !important;
@@ -52,7 +43,7 @@ div[data-baseweb="popover"] {
 /* Dataset preview container */
 .stDataFrame, .dataframe {
     background-color: #f5e6cc !important; /* sandal */
-    color: #000000 !important;            /* black */
+    color: #000000 !important;
     border-radius: 8px;
 }
 .dataframe th {
