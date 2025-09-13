@@ -7,15 +7,15 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Dataset loading ---
+# Cache dataset loading
 @st.cache_data
 def load_default_data(path):
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
 
-# --- Model training ---
-@st.cache_resource
+# Cache model training
+@st.cache_data
 def train_model(df, target_column, cat_features, num_features):
     X = df[cat_features + num_features]
     y = df[target_column]
@@ -40,33 +40,32 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
-# --- Streamlit app layout ---
+# --- Main Streamlit App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
-# --- Dataset path ---
 data_path = "depression.csv"
 if not os.path.exists(data_path):
     st.error(f"Dataset {data_path} not found in app folder.")
     st.stop()
 
 df = load_default_data(data_path)
-st.subheader("Dataset preview:")
+st.write("Dataset preview:")
 st.write(df.head())
 
-# --- Features and target ---
 target_column = "Depression"
 if target_column not in df.columns:
     st.error(f"Target column '{target_column}' not found.")
     st.stop()
 
+# Features
 feature_cols = [c for c in df.columns if c != target_column]
 cat_features = [c for c in feature_cols if not pd.api.types.is_numeric_dtype(df[c])]
 num_features = [c for c in feature_cols if pd.api.types.is_numeric_dtype(df[c])]
 
 st.subheader("Enter your details:")
 
-# --- User input form ---
+# User input
 user_input = {}
 for c in feature_cols:
     if c in num_features:
@@ -87,14 +86,14 @@ for c in feature_cols:
         options = df[c].dropna().unique().tolist()
         user_input[c] = st.selectbox(f"{c}", options)
 
-# --- Prediction ---
+# Predict
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.error("⚠️ You may be experiencing symptoms of depression.")
+        st.error("⚠ You may be experiencing symptoms of depression.")
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -105,7 +104,7 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
     else:
-        st.success("🙂 You do **not** appear to be showing strong signs of depression.")
+        st.success("🙂 You do *not* appear to be showing strong signs of depression.")
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
@@ -115,4 +114,4 @@ if st.button("Predict"):
             "Be mindful of your thoughts; reflection and relaxation matter.",
             "If things change, it’s okay to reach out for help."
         ]:
-            st.markdown(f"- ✅ {msg}")
+            st.markdown(f"- ✅ {msg}")
