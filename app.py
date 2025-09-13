@@ -19,12 +19,16 @@ def train_model(df, target, cat_features, num_features):
     model.fit(X, y)
     return model
 
-# Page background color (sandal)
+# Page background + text color
 st.markdown(
     """
     <style>
         .stApp {
-            background-color: #FAEBD7; /* Sandal color */
+            background-color: #FAEBD7; /* sandal */
+            color: black !important;
+        }
+        * {
+            color: black !important;
         }
     </style>
     """,
