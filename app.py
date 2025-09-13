@@ -7,13 +7,13 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS ---
+# --- Custom CSS: Inputs pink, button black with white text ---
 st.markdown("""
 <style>
-/* Page background */
+/* Page background sandal, text black */
 .stApp {
-    background-color: #f5e6cc !important; /* sandal */
-    color: #000000 !important; /* black text */
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
     font-family: 'Segoe UI', sans-serif;
 }
 
@@ -23,53 +23,70 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels (topics only) */
+/* Labels */
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
-    background: none !important;
+    background: none !important;  /* remove pink box under labels */
 }
 
-/* Input boxes (pink) */
-.stTextInput input,
-.stNumberInput input,
-.stSelectbox div[role="combobox"] {
-    background-color: #ffe6f0 !important; /* pink */
-    color: #000000 !important;
+/* Generic form input containers */
+.stTextInput, .stNumberInput, .stSelectbox {
+    background-color: #ffe6f0 !important; /* full pink */
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
+    padding: 4px !important;
+}
+
+/* Text inside inputs */
+.stTextInput input, .stNumberInput input, .stSelectbox div {
+    background-color: #ffe6f0 !important;
+    color: #000000 !important;
+    border: none !important;
     font-weight: 500 !important;
 }
 
-/* Number input +/- buttons */
+/* +/- buttons in number input */
 .stNumberInput button {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: none !important;
 }
 
-/* Dropdown menu */
+/* Dropdown closed box */
+div[role="combobox"] {
+    background-color: #ffe6f0 !important;
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    color: #000000 !important;
+}
+
+/* Dropdown open menu */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
 }
+
+/* Dropdown options */
 div[data-baseweb="option"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
 }
 div[data-baseweb="option"]:hover {
-    background-color: #f5c6d6 !important;
+    background-color: #f5c6d6 !important; /* darker pink on hover */
 }
 
-/* Prediction result box */
-.result-box {
-    background-color: #ff4d88; /* stronger pink */
-    color: #ffffff !important; /* white text */
-    font-weight: 700 !important;
-    font-size: 18px !important;
-    padding: 12px;
-    border-radius: 8px;
-    margin-top: 10px;
+/* Predict button: white text on black */
+div.stButton > button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    border: none !important;
+}
+div.stButton > button:hover {
+    background-color: #333333 !important;
+    color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -159,7 +176,7 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.markdown('<div class="result-box">⚠ You may be experiencing symptoms of depression.</div>', unsafe_allow_html=True)
+        st.markdown("⚠ **You may be experiencing symptoms of depression.**")
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -171,7 +188,7 @@ if st.button("Predict"):
             st.markdown(f"- ✅ {msg}")
         st.balloons()
     else:
-        st.markdown('<div class="result-box">🙂 You do *not* appear to be showing strong signs of depression.</div>', unsafe_allow_html=True)
+        st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
