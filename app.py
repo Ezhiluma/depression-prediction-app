@@ -7,40 +7,42 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS (uniform sandal + black) ---
+# --- Custom CSS (Uniform Sandal + Black) ---
 st.markdown("""
 <style>
 /* Whole app background */
 .stApp {
     background-color: #f5e6cc !important; /* sandal */
-    color: #000000 !important;            /* black text */
+    color: #000000 !important;
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* Titles */
 h1, h2, h3, h4, h5, h6 {
-    color: #000000 !important; /* black */
+    color: #000000 !important;
     font-weight: 700 !important;
 }
 
 /* Labels and text */
 label, .stMarkdown, .stText, .stNumberInput label, .stSelectbox label {
-    color: #000000 !important; /* black */
+    color: #000000 !important;
     font-weight: 600 !important;
 }
 
-/* Inputs uniform (no double border) */
-input, textarea, select, .stTextInput input, .stNumberInput input,
+/* 🔥 Uniform input style */
+input, textarea, select, 
+.stTextInput input, .stNumberInput input,
 .stSelectbox div[role="button"], .stSelectbox div[data-baseweb="select"],
 .stRadio div[role="radiogroup"], .stMultiSelect div[role="combobox"] {
-    background-color: #f5e6cc !important; /* same sandal */
+    background-color: #f5e6cc !important; /* sandal */
     border: 1px solid #000000 !important; /* thin black border */
     border-radius: 6px !important;
     color: #000000 !important;
     box-shadow: none !important;
+    font-weight: 500 !important;
 }
 
-/* Dropdown options */
+/* Dropdown menu options */
 [data-baseweb="popover"] {
     background-color: #f5e6cc !important;
     color: #000000 !important;
@@ -56,6 +58,15 @@ input, textarea, select, .stTextInput input, .stNumberInput input,
     background-color: #f5e6cc !important;
     color: #000000 !important;
     border: 1px solid #000000 !important;
+}
+
+/* Predict button uniform */
+.stButton>button {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 6px !important;
+    font-weight: 600 !important;
 }
 </style>
 """, unsafe_allow_html=True)
