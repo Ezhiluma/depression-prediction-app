@@ -14,43 +14,45 @@ st.markdown("""
 .stApp {
     background-color: #f5e6cc;  /* sandal */
     font-family: 'Segoe UI', sans-serif;
-    color: #444444;
+    color: #000000; /* black text */
 }
 
-/* Titles (mild blue) */
+/* Titles (black) */
 h1, h2, h3, h4, h5, h6 {
-    color: #4a6fa5 !important; 
+    color: #4a6fa5 !important;
     font-weight: 700 !important;
 }
 
 /* Labels */
 label, .stNumberInput label, .stSelectbox label {
-    display: block !important;
     font-weight: 700 !important;
-    color: #000000 !important;  /* black */
+    color: #000000 !important;
     margin-bottom: 6px !important;
 }
 
-/* Input boxes (only mild pink, no double color) */
-.stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-    background-color: #ffe6f0 !important; /* mild pink */
-    border: 1px solid #cfd8dc !important;
+/* Input boxes (only pink, no double layers) */
+.stNumberInput input, .stTextInput input, 
+.stSelectbox div[data-baseweb="select"] {
+    background-color: #ffe6f0 !important;  /* pink */
+    border: 1px solid #ffe6f0 !important;  /* same color → flat look */
     border-radius: 6px !important;
     padding: 6px !important;
     color: #000000 !important;
     font-weight: 500 !important;
+    box-shadow: none !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
-    color: #000000 !important; 
+    color: #000000 !important;
+    border: 1px solid #ffe6f0 !important;
 }
 
-/* Dataset preview container box */
+/* Dataset preview container */
 .stDataFrame, .dataframe {
     background-color: #f5e6cc !important; /* sandal */
-    color: #000000 !important;            /* black text */
+    color: #000000 !important;            /* black */
     border-radius: 8px;
 }
 .dataframe th {
@@ -97,7 +99,7 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
-# --- Main Streamlit App ---
+# --- Main App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
@@ -143,7 +145,7 @@ for c in feature_cols:
         options = df[c].dropna().unique().tolist()
         user_input[c] = st.selectbox(f"{c}", options)
 
-# --- Prediction ---
+# Prediction
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
