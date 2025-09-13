@@ -54,8 +54,8 @@ div[data-baseweb="select"] > div {
     border: 0px solid #ffe6f0 !important;
     border-radius: 6px !important;
     padding: 10px 12px !important;
-    font-size: 16px !important;
-    min-height: 45px !important;
+    font-size: 10px !important;
+    min-height: 25px !important;
 }
 
 /* Dropdown selected value text */
@@ -206,4 +206,5 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
+
 
