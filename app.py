@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS (Uniform Sandal + Black) ---
+# --- Custom CSS (Uniform Sandal + Black, no dark boxes) ---
 st.markdown("""
 <style>
 /* Whole app background */
@@ -17,36 +17,52 @@ st.markdown("""
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Titles */
+/* Headings */
 h1, h2, h3, h4, h5, h6 {
     color: #000000 !important;
     font-weight: 700 !important;
 }
 
-/* Labels and text */
-label, .stMarkdown, .stText, .stNumberInput label, .stSelectbox label {
+/* Labels */
+label, .stMarkdown, .stText {
     color: #000000 !important;
     font-weight: 600 !important;
 }
 
-/* 🔥 Uniform input style */
-input, textarea, select, 
+/* Inputs: text, number, select, radio */
+input, textarea, select,
 .stTextInput input, .stNumberInput input,
-.stSelectbox div[role="button"], .stSelectbox div[data-baseweb="select"],
-.stRadio div[role="radiogroup"], .stMultiSelect div[role="combobox"] {
-    background-color: #f5e6cc !important; /* sandal */
-    border: 1px solid #000000 !important; /* thin black border */
-    border-radius: 6px !important;
+.stSelectbox div[role="button"], 
+.stSelectbox div[data-baseweb="select"],
+.stRadio div[role="radiogroup"], 
+.stMultiSelect div[role="combobox"] {
+    background-color: #f5e6cc !important;  /* sandal */
     color: #000000 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 6px !important;
     box-shadow: none !important;
     font-weight: 500 !important;
 }
 
-/* Dropdown menu options */
+/* Dropdown menu (remove black) */
 [data-baseweb="popover"] {
     background-color: #f5e6cc !important;
     color: #000000 !important;
     border: 1px solid #000000 !important;
+}
+
+/* Dropdown options */
+[data-baseweb="option"] {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+}
+
+/* Fix number input increment/decrement buttons */
+.stNumberInput button {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    border-radius: 4px !important;
 }
 
 /* Dataset preview */
@@ -60,7 +76,7 @@ input, textarea, select,
     border: 1px solid #000000 !important;
 }
 
-/* Predict button uniform */
+/* Button */
 .stButton>button {
     background-color: #f5e6cc !important;
     color: #000000 !important;
