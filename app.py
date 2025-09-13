@@ -7,39 +7,41 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS for mild styling ---
+# --- Custom CSS for pastel theme ---
 st.markdown("""
 <style>
-/* Page background and text */
+/* Page background */
 .stApp {
-    background-color: #f7f9f9;
-    color: #333333;
+    background-color: #fff7e6;  /* soft cream */
+    color: #000000;             /* black text */
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* Headers */
 h1, h2, h3 {
-    color: #4a6fa5;
+    color: #333333;
 }
 
 /* Buttons */
 div.stButton > button:first-child {
-    background-color: #8ecae6;
-    color: #ffffff;
+    background-color: #ffb3c6;   /* soft pink */
+    color: #000000;
     border-radius: 8px;
     padding: 6px 12px;
     font-weight: bold;
+    border: 1px solid #ff99ac;
 }
 div.stButton > button:first-child:hover {
-    background-color: #219ebc;
+    background-color: #ff99ac;   /* darker pink */
 }
 
 /* Input boxes */
 .stNumberInput input, .stSelectbox select {
-    background-color: #ffffff;
-    border: 1px solid #cfd8dc;
+    background-color: #ffe6f0;   /* light pink */
+    border: 1px solid #ffb3c6;
     border-radius: 6px;
     padding: 5px;
+    color: #000000;              /* black text */
 }
 
 /* Prediction messages */
@@ -51,18 +53,18 @@ div.stButton > button:first-child:hover {
 /* Dataframe / Table styling */
 .stDataFrame, .stTable {
     background-color: #ffffff !important;
-    color: #333333 !important;
-    border: 1px solid #cfd8dc;
+    color: #000000 !important;
+    border: 1px solid #ffccd5;
     border-radius: 8px;
     padding: 10px;
 }
 .stDataFrame th, .stTable th {
-    background-color: #8ecae6 !important;
-    color: #ffffff !important;
+    background-color: #ffe6e6 !important;  /* light pastel header */
+    color: #000000 !important;
     font-weight: bold;
 }
 .stDataFrame td, .stTable td {
-    background-color: #f1f8ff !important;
+    background-color: #fffafa !important;  /* very light pink rows */
     color: #000000 !important;
 }
 </style>
