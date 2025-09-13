@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS: All inputs & dropdowns fully pink ---
+# --- Custom CSS ---
 st.markdown("""
 <style>
 /* Page background sandal, text black */
@@ -23,15 +23,16 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels */
+/* Labels (topics) remain black */
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
+    background: none !important; /* no pink background */
 }
 
-/* Generic form input containers */
+/* Input boxes */
 .stTextInput, .stNumberInput, .stSelectbox {
-    background-color: #ffe6f0 !important; /* full pink */
+    background-color: #ffe6f0 !important; /* pink box */
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
     padding: 4px !important;
@@ -72,7 +73,14 @@ div[data-baseweb="option"] {
     color: #000000 !important;
 }
 div[data-baseweb="option"]:hover {
-    background-color: #f5c6d6 !important; /* darker pink on hover */
+    background-color: #f5c6d6 !important;
+}
+
+/* Prediction result in white text */
+.result-text {
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    font-size: 18px !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -162,7 +170,7 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.markdown("⚠ **You may be experiencing symptoms of depression.**")
+        st.markdown('<p class="result-text">⚠ You may be experiencing symptoms of depression.</p>', unsafe_allow_html=True)
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -174,7 +182,7 @@ if st.button("Predict"):
             st.markdown(f"- ✅ {msg}")
         st.balloons()
     else:
-        st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
+        st.markdown('<p class="result-text">🙂 You do *not* appear to be showing strong signs of depression.</p>', unsafe_allow_html=True)
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
