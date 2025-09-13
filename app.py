@@ -59,12 +59,13 @@ div[data-baseweb="popover"] {
     font-weight: 600;
 }
 
-/* Dataset preview (sandal background) */
-.stDataFrame div {
-    background-color: #f5e6cc !important;  /* same as page background */
+/* Dataset preview (sandal background for headers and cells, black text) */
+.stDataFrame th, .stDataFrame td {
+    background-color: #f5e6cc !important;  /* sandal / light peach */
     color: #000000 !important;             /* black text */
-    border-radius: 6px !important;
+    font-weight: 700 !important;           /* headers bold */
     padding: 8px !important;
+    border-radius: 4px !important;
 }
 </style>
 """, unsafe_allow_html=True)
