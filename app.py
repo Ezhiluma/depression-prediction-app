@@ -29,32 +29,36 @@ label, .stNumberInput label, .stSelectbox label {
     font-weight: 700 !important;
 }
 
-/* Input boxes (uniform pink) */
+/* Input boxes (uniform solid pink) */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-    background-color: #ffe6f0 !important; /* pink */
+    background-color: #ffe6f0 !important; /* solid pink */
     color: #000000 !important;  /* black text */
-    border: 1px solid #ffe6f0 !important;
+    border: 1px solid #ffe6f0 !important; /* remove border difference */
     border-radius: 6px !important;
     font-weight: 500 !important;
 }
 
 /* Remove black +/- box for number inputs */
 .stNumberInput button {
-    background-color: #ffe6f0 !important;
+    background-color: #ffe6f0 !important; /* match input box */
     color: #000000 !important;
     border: none !important;
 }
 
-/* Dropdown menu options also pink */
+/* Dropdown open menu also solid pink */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
+    border: 1px solid #ffe6f0 !important;
 }
 
-/* Dataset preview */
-.stDataFrameContainer, .element-container {
-    background-color: #f5e6cc !important;
+/* Dropdown options text black on pink */
+div[data-baseweb="option"] {
+    background-color: #ffe6f0 !important;
     color: #000000 !important;
+}
+div[data-baseweb="option"]:hover {
+    background-color: #f5c6d6 !important; /* slightly darker pink on hover */
 }
 </style>
 """, unsafe_allow_html=True)
