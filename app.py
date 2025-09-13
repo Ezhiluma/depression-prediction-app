@@ -65,10 +65,12 @@ div[data-baseweb="popover"] {
     font-weight: 600;
 }
 
-/* Dataset preview (light theme, no black background) */
+/* Dataset preview (black background) */
 .stDataFrame div {
-    background-color: #ffffff !important;
-    color: #000000 !important;
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border-radius: 6px !important;
+    padding: 8px !important;
 }
 </style>
 """, unsafe_allow_html=True)
