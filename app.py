@@ -10,7 +10,7 @@ from sklearn.ensemble import RandomForestClassifier
 # --- Custom CSS ---
 st.markdown("""
 <style>
-/* Page background sandal, text black */
+/* Page background sandal */
 .stApp {
     background-color: #f5e6cc !important;
     color: #000000 !important;
@@ -23,31 +23,29 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels: black text only */
+/* Labels: only text */
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
     background: transparent !important;
-    padding: 0px !important;
-    margin-bottom: 6px !important;  /* keep labels above inputs */
+    margin-bottom: 6px !important;
 }
 
-/* Inputs: pink only, no extra border box */
+/* Containers stripped */
 .stTextInput, .stNumberInput, .stSelectbox {
-    background-color: transparent !important;
+    background: transparent !important;
     border: none !important;
     padding: 0px !important;
     margin-bottom: 14px !important;
 }
 
-/* Input fields themselves */
+/* Text & number inputs */
 .stTextInput input, .stNumberInput input {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    font-weight: 500 !important;
 }
 
 /* +/- buttons */
@@ -60,9 +58,9 @@ label, .stNumberInput label, .stSelectbox label {
 /* Dropdown closed */
 div[data-baseweb="select"] {
     background-color: #ffe6f0 !important;
-    color: #000000 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
+    color: #000000 !important;
     padding: 4px !important;
 }
 
@@ -81,7 +79,7 @@ div[data-baseweb="option"]:hover {
     background-color: #f5c6d6 !important;
 }
 
-/* Predict button: black with white text */
+/* Predict button */
 div.stButton > button {
     background-color: #000000 !important;
     color: #ffffff !important;
@@ -92,7 +90,6 @@ div.stButton > button {
 }
 div.stButton > button:hover {
     background-color: #333333 !important;
-    color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -129,7 +126,7 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
-# --- Main Streamlit App ---
+# --- Main App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
@@ -154,28 +151,20 @@ num_features = [c for c in feature_cols if pd.api.types.is_numeric_dtype(df[c])]
 
 st.subheader("Enter your details:")
 
-# User input
+# Inputs
 user_input = {}
 for c in feature_cols:
     if c in num_features:
         col_series = df[c].dropna()
-        min_val = float(col_series.min())
-        max_val = float(col_series.max())
-        default_val = float(col_series.median())
+        min_val, max_val, default_val = float(col_series.min()), float(col_series.max()), float(col_series.median())
         step_val = 0.1 if (max_val - min_val) < 1 else 1.0
-        user_input[c] = st.number_input(
-            f"{c}",
-            min_value=min_val,
-            max_value=max_val,
-            value=default_val,
-            step=step_val,
-            format="%.2f"
-        )
+        user_input[c] = st.number_input(f"{c}", min_value=min_val, max_value=max_val,
+                                        value=default_val, step=step_val, format="%.2f")
     else:
         options = df[c].dropna().unique().tolist()
         user_input[c] = st.selectbox(f"{c}", options)
 
-# Predict
+# Prediction
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
