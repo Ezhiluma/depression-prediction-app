@@ -19,6 +19,18 @@ def train_model(df, target, cat_features, num_features):
     model.fit(X, y)
     return model
 
+# Page background color (sandal)
+st.markdown(
+    """
+    <style>
+        .stApp {
+            background-color: #FAEBD7; /* Sandal color */
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Title
 st.title("Depression Prediction App")
 
