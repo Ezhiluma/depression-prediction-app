@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS: Inputs pink, button black with white text ---
+# --- Custom CSS ---
 st.markdown("""
 <style>
 /* Page background sandal, text black */
@@ -23,30 +23,33 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels */
+/* Labels: only black text */
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
-    background: none !important;  /* remove pink box under labels */
+    background: transparent !important;
+    padding: 0px !important;
+    margin-bottom: 4px !important;  /* spacing between label & box */
 }
 
-/* Generic form input containers */
+/* Inputs: pink */
 .stTextInput, .stNumberInput, .stSelectbox {
-    background-color: #ffe6f0 !important; /* full pink */
+    background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
     padding: 4px !important;
+    margin-bottom: 12px !important;  /* space below each box */
 }
 
 /* Text inside inputs */
-.stTextInput input, .stNumberInput input, .stSelectbox div {
+.stTextInput input, .stNumberInput input {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: none !important;
     font-weight: 500 !important;
 }
 
-/* +/- buttons in number input */
+/* +/- buttons */
 .stNumberInput button {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
@@ -54,14 +57,14 @@ label, .stNumberInput label, .stSelectbox label {
 }
 
 /* Dropdown closed box */
-div[role="combobox"] {
+div[data-baseweb="select"] {
     background-color: #ffe6f0 !important;
+    color: #000000 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
-    color: #000000 !important;
 }
 
-/* Dropdown open menu */
+/* Dropdown expanded menu */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
@@ -76,7 +79,7 @@ div[data-baseweb="option"]:hover {
     background-color: #f5c6d6 !important; /* darker pink on hover */
 }
 
-/* Predict button: white text on black */
+/* Predict button: black with white text */
 div.stButton > button {
     background-color: #000000 !important;
     color: #ffffff !important;
