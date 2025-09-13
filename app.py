@@ -7,54 +7,52 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS for mild modern styling ---
-st.markdown(
-    """
-    <style>
-    /* Page background and text */
-    .stApp {
-        background-color: #f0f4f8;
-        color: #1a1a1a;
-    }
-    /* Headers */
-    h1, h2, h3 {
-        color: #4a6fa5;
-    }
-    /* Buttons */
-    div.stButton > button:first-child {
-        background-color: #6fa8dc;
-        color: white;
-        border-radius: 10px;
-        padding: 5px 10px;
-        font-weight: bold;
-    }
-    div.stButton > button:first-child:hover {
-        background-color: #547aa0;
-    }
-    /* Input boxes */
-    .stNumberInput input, .stSelectbox select {
-        background-color: #ffffff;
-        border: 1px solid #cfd8dc;
-        border-radius: 8px;
-        padding: 6px;
-    }
-    /* Prediction boxes */
-    .stAlert {
-        border-radius: 12px;
-        padding: 12px;
-    }
-    </style>
-    """, unsafe_allow_html=True
-)
+# --- Custom CSS for mild style ---
+st.markdown("""
+<style>
+/* Page background */
+.stApp {
+    background-color: #fdf6f0;
+    color: #333333;
+}
+/* Headers */
+h1, h2, h3 {
+    color: #5a5a8a;
+}
+/* Buttons */
+div.stButton > button:first-child {
+    background-color: #a8d5ba;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+div.stButton > button:first-child:hover {
+    background-color: #7fbf93;
+}
+/* Input boxes */
+.stNumberInput input, .stSelectbox select {
+    background-color: #ffffff;
+    border: 1px solid #cfd8dc;
+    border-radius: 6px;
+    padding: 5px;
+}
+/* Prediction boxes */
+.stAlert {
+    border-radius: 10px;
+    padding: 10px;
+}
+</style>
+""", unsafe_allow_html=True)
 
-# --- Dataset loading ---
+# Cache dataset loading
 @st.cache_data
 def load_default_data(path):
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
 
-# --- Model training ---
+# Cache model training
 @st.cache_data
 def train_model(df, target_column, cat_features, num_features):
     X = df[cat_features + num_features]
@@ -80,7 +78,7 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
-# --- Streamlit App ---
+# --- Main Streamlit App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
@@ -90,22 +88,22 @@ if not os.path.exists(data_path):
     st.stop()
 
 df = load_default_data(data_path)
-st.subheader("Dataset preview:")
+st.write("Dataset preview:")
 st.write(df.head())
 
-# --- Features and target ---
 target_column = "Depression"
 if target_column not in df.columns:
     st.error(f"Target column '{target_column}' not found.")
     st.stop()
 
+# Features
 feature_cols = [c for c in df.columns if c != target_column]
 cat_features = [c for c in feature_cols if not pd.api.types.is_numeric_dtype(df[c])]
 num_features = [c for c in feature_cols if pd.api.types.is_numeric_dtype(df[c])]
 
 st.subheader("Enter your details:")
 
-# --- User input ---
+# User input
 user_input = {}
 for c in feature_cols:
     if c in num_features:
@@ -126,7 +124,7 @@ for c in feature_cols:
         options = df[c].dropna().unique().tolist()
         user_input[c] = st.selectbox(f"{c}", options)
 
-# --- Prediction ---
+# Predict
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
