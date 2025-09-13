@@ -7,14 +7,57 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# Cache dataset loading
+# --- Custom CSS for mild styling ---
+st.markdown("""
+<style>
+/* Page background and text */
+.stApp {
+    background-color: #f7f9f9;
+    color: #333333;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Headers */
+h1, h2, h3 {
+    color: #4a6fa5;
+}
+
+/* Buttons */
+div.stButton > button:first-child {
+    background-color: #8ecae6;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-weight: bold;
+}
+div.stButton > button:first-child:hover {
+    background-color: #219ebc;
+}
+
+/* Input boxes */
+.stNumberInput input, .stSelectbox select {
+    background-color: #ffffff;
+    border: 1px solid #cfd8dc;
+    border-radius: 6px;
+    padding: 5px;
+}
+
+/* Prediction messages */
+.stAlert {
+    border-radius: 12px;
+    padding: 10px;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# --- Cache dataset loading ---
 @st.cache_data
 def load_default_data(path):
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
 
-# Cache model training
+# --- Cache model training ---
 @st.cache_data
 def train_model(df, target_column, cat_features, num_features):
     X = df[cat_features + num_features]
