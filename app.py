@@ -27,19 +27,21 @@ h1, h2, h3, h4, h5, h6 {
 label, .stNumberInput label, .stSelectbox label {
     color: #000000 !important;
     font-weight: 700 !important;
+    margin-bottom: 4px !important;
 }
 
-/* Text inputs and number inputs */
+/* Text input, number input full pink */
 .stTextInput input, .stNumberInput input {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
-    border-radius: 6px !important;
     border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    padding: 10px 12px !important;
     font-size: 16px !important;
-    padding: 10px !important;
+    font-weight: 500 !important;
 }
 
-/* Number input buttons */
+/* Number input +/- buttons */
 .stNumberInput button {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
@@ -51,13 +53,19 @@ div[data-baseweb="select"] > div {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
-    color: #000000 !important;
     padding: 10px 12px !important;
     font-size: 16px !important;
     min-height: 45px !important;
 }
 
-/* Dropdown menu when expanded */
+/* Dropdown selected value text */
+div[data-baseweb="select"] span {
+    color: #000000 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+/* Dropdown expanded menu */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
@@ -73,16 +81,17 @@ div[data-baseweb="option"] {
 }
 div[data-baseweb="option"]:hover {
     background-color: #f5c6d6 !important;
+    color: #000000 !important;
 }
 
 /* Predict button */
 .stButton button {
     background-color: #000000 !important;
     color: #ffffff !important;
-    font-size: 18px !important;
+    font-size: 16px !important;
     font-weight: 700 !important;
     border-radius: 8px !important;
-    padding: 10px 20px !important;
+    padding: 8px 16px !important;
 }
 </style>
 """, unsafe_allow_html=True)
