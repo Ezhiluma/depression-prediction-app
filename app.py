@@ -7,59 +7,81 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
+# --- Page Config ---
+st.set_page_config(page_title="Depression Predictor", layout="centered")
+
 # --- Custom CSS ---
 st.markdown("""
 <style>
 /* Page background */
 .stApp {
-    background-color: #f5e6cc;  /* sandal / light peach */
+    background-color: #fff8f0;  /* very light cream */
     font-family: 'Segoe UI', sans-serif;
     color: #444444;
 }
 
-/* Titles (mild blue) */
+/* Titles */
 h1, h2, h3, h4, h5, h6 {
-    color: #4a6fa5 !important; 
+    color: #1a1a1a !important; 
     font-weight: 700 !important;
+    margin-bottom: 12px !important;
 }
 
-/* Labels (questions under Enter your details) */
+/* Labels */
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
-    color: #000000 !important;  /* labels black */
+    color: #000000 !important;  
     margin-bottom: 6px !important;
 }
 
-/* Input boxes (mild pink) */
+/* Input boxes (light pink background) */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-    background-color: #ffe6f0 !important; /* mild pink */
+    background-color: #ffe6f0 !important; 
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    color: #000000 !important; /* black text */
+    color: #000000 !important; 
     font-weight: 500 !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
-    background-color: #ffe6f0 !important; /* mild pink for options too */
+    background-color: #ffe6f0 !important;
     color: #000000 !important; 
 }
 
-/* Dataset preview container box */
+/* Dataset preview box */
 .stDataFrameContainer, .element-container {
-    background-color: #f5e6cc !important; /* sandal */
+    background-color: #fff8f0 !important; 
     border-radius: 8px;
-    padding: 12px;
+    padding: 8px;
+    box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
 }
 
-/* Dataset preview cells and headers */
-.stDataFrame th, .stDataFrame td {
-    background-color: #f5e6cc !important; /* same as container */
-    color: #000000 !important;             /* black text */
-    font-weight: 700 !important;           /* headers bold */
-    padding: 8px !important;
+/* Table cells */
+.stDataFrame th {
+    background-color: #fddde6 !important; 
+    color: #000000 !important; 
+    font-weight: 700 !important;
+}
+.stDataFrame td {
+    background-color: #fff8f0 !important; 
+    color: #000000 !important;
+}
+
+/* Predict button */
+div.stButton > button:first-child {
+    background-color: #4a6fa5 !important;
+    color: white !important;
+    font-weight: bold !important;
+    border-radius: 8px !important;
+    padding: 10px 20px !important;
+    border: none !important;
+}
+div.stButton > button:first-child:hover {
+    background-color: #36527a !important;
+    color: #ffffff !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -97,7 +119,6 @@ def train_model(df, target_column, cat_features, num_features):
     return clf
 
 # --- Main Streamlit App ---
-st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
 data_path = "depression.csv"
@@ -106,8 +127,9 @@ if not os.path.exists(data_path):
     st.stop()
 
 df = load_default_data(data_path)
+
 st.subheader("Dataset preview:")
-st.write(df.head())
+st.dataframe(df.head(), use_container_width=True)
 
 target_column = "Depression"
 if target_column not in df.columns:
@@ -123,24 +145,26 @@ st.subheader("Enter your details:")
 
 # User input
 user_input = {}
-for c in feature_cols:
-    if c in num_features:
-        col_series = df[c].dropna()
-        min_val = float(col_series.min())
-        max_val = float(col_series.max())
-        default_val = float(col_series.median())
-        step_val = 0.1 if (max_val - min_val) < 1 else 1.0
-        user_input[c] = st.number_input(
-            f"{c}",
-            min_value=min_val,
-            max_value=max_val,
-            value=default_val,
-            step=step_val,
-            format="%.2f"
-        )
-    else:
-        options = df[c].dropna().unique().tolist()
-        user_input[c] = st.selectbox(f"{c}", options)
+cols = st.columns(2)  # two-column layout
+for i, c in enumerate(feature_cols):
+    with cols[i % 2]:
+        if c in num_features:
+            col_series = df[c].dropna()
+            min_val = float(col_series.min())
+            max_val = float(col_series.max())
+            default_val = float(col_series.median())
+            step_val = 0.1 if (max_val - min_val) < 1 else 1.0
+            user_input[c] = st.number_input(
+                f"{c}",
+                min_value=min_val,
+                max_value=max_val,
+                value=default_val,
+                step=step_val,
+                format="%.2f"
+            )
+        else:
+            options = df[c].dropna().unique().tolist()
+            user_input[c] = st.selectbox(f"{c}", options)
 
 # Predict
 if st.button("Predict"):
@@ -159,6 +183,7 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
+        st.balloons()
     else:
         st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
@@ -171,3 +196,4 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
+        st.balloons()
