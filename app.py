@@ -7,44 +7,6 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS for mild style ---
-st.markdown("""
-<style>
-/* Page background */
-.stApp {
-    background-color: #fdf6f0;
-    color: #333333;
-}
-/* Headers */
-h1, h2, h3 {
-    color: #5a5a8a;
-}
-/* Buttons */
-div.stButton > button:first-child {
-    background-color: #a8d5ba;
-    color: #ffffff;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-weight: bold;
-}
-div.stButton > button:first-child:hover {
-    background-color: #7fbf93;
-}
-/* Input boxes */
-.stNumberInput input, .stSelectbox select {
-    background-color: #ffffff;
-    border: 1px solid #cfd8dc;
-    border-radius: 6px;
-    padding: 5px;
-}
-/* Prediction boxes */
-.stAlert {
-    border-radius: 10px;
-    padding: 10px;
-}
-</style>
-""", unsafe_allow_html=True)
-
 # Cache dataset loading
 @st.cache_data
 def load_default_data(path):
