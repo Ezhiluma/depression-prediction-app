@@ -7,85 +7,72 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Page Config ---
-st.set_page_config(page_title="Depression Predictor", layout="centered")
-
 # --- Custom CSS ---
 st.markdown("""
 <style>
 /* Page background */
 .stApp {
-    background-color: #fdf6e3;  /* light cream */
+    background-color: #fff5e1;  /* sandal / light peach */
     font-family: 'Segoe UI', sans-serif;
     color: #444444;
 }
 
-/* Titles (blue) */
+/* Titles */
 h1, h2, h3, h4, h5, h6 {
-    color: #2f4a75 !important; 
+    color: #2c3e73 !important; 
     font-weight: 700 !important;
 }
 
 /* Labels */
 label, .stNumberInput label, .stSelectbox label {
+    display: block !important;
     font-weight: 700 !important;
     color: #000000 !important;  
     margin-bottom: 6px !important;
-    font-size: 16px !important;
 }
 
-/* Input boxes (mild pink) */
+/* Input boxes - only pink */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
-    background-color: #ffe6f0 !important; 
-    border: 1px solid #e0e0e0 !important;
-    border-radius: 8px !important;
-    padding: 8px !important;
+    background-color: #ffe6f2 !important; /* mild pink */
+    border: 1px solid #cfd8dc !important;
+    border-radius: 6px !important;
+    padding: 6px !important;
     color: #000000 !important; 
     font-weight: 500 !important;
-    font-size: 15px !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
-    background-color: #ffe6f0 !important;
+    background-color: #ffe6f2 !important; 
     color: #000000 !important; 
-    font-size: 15px !important;
 }
 
-/* Dataset preview box */
+/* Dataset preview container */
 .stDataFrameContainer, .element-container {
-    background-color: #fdf6e3 !important; 
+    background-color: #fff5e1 !important; 
     border-radius: 8px;
     padding: 12px;
 }
 
-/* Table headers */
-.stDataFrame th {
-    background-color: #fddde6 !important; 
-    color: #000000 !important; 
-    font-weight: 700 !important;
+/* Dataset preview cells and headers */
+.stDataFrame th, .stDataFrame td {
+    background-color: #fff5e1 !important; 
+    color: #000000 !important;             
+    font-weight: 700 !important;           
+    padding: 8px !important;
 }
 
-/* Table cells */
-.stDataFrame td {
-    background-color: #fdf6e3 !important; 
-    color: #000000 !important;
-    font-size: 14px !important;
-}
-
-/* Predict button */
+/* Button styling */
 div.stButton > button:first-child {
-    background-color: #4a6fa5 !important;
-    color: white !important;
-    font-weight: bold !important;
-    border-radius: 8px !important;
-    padding: 10px 24px !important;
-    border: none !important;
-    font-size: 16px !important;
+    background-color: #4a6fa5;
+    color: white;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 10px 20px;
 }
 div.stButton > button:first-child:hover {
-    background-color: #36527a !important;
-    color: #ffffff !important;
+    background-color: #36527a;
+    color: #fff;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -123,6 +110,7 @@ def train_model(df, target_column, cat_features, num_features):
     return clf
 
 # --- Main Streamlit App ---
+st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
 data_path = "depression.csv"
@@ -131,9 +119,8 @@ if not os.path.exists(data_path):
     st.stop()
 
 df = load_default_data(data_path)
-
 st.subheader("Dataset preview:")
-st.dataframe(df.head(), use_container_width=True)
+st.write(df.head())
 
 target_column = "Depression"
 if target_column not in df.columns:
@@ -168,7 +155,7 @@ for c in feature_cols:
         options = df[c].dropna().unique().tolist()
         user_input[c] = st.selectbox(f"{c}", options)
 
-# Predict
+# --- Prediction Block with Notes + Balloons ---
 if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
@@ -186,6 +173,7 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
+
     else:
         st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
@@ -199,4 +187,3 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
-
