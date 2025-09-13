@@ -15,16 +15,15 @@ st.markdown("""
 <style>
 /* Page background */
 .stApp {
-    background-color: #fff8f0;  /* very light cream */
+    background-color: #fdf6e3;  /* light cream */
     font-family: 'Segoe UI', sans-serif;
     color: #444444;
 }
 
-/* Titles */
+/* Titles (blue) */
 h1, h2, h3, h4, h5, h6 {
-    color: #1a1a1a !important; 
+    color: #2f4a75 !important; 
     font-weight: 700 !important;
-    margin-bottom: 12px !important;
 }
 
 /* Labels */
@@ -33,41 +32,46 @@ label, .stNumberInput label, .stSelectbox label {
     font-weight: 700 !important;
     color: #000000 !important;  
     margin-bottom: 6px !important;
+    font-size: 16px !important;
 }
 
-/* Input boxes (light pink background) */
+/* Input boxes (mild pink) */
 .stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
     background-color: #ffe6f0 !important; 
-    border: 1px solid #cfd8dc !important;
-    border-radius: 6px !important;
-    padding: 6px !important;
+    border: 1px solid #e0e0e0 !important;
+    border-radius: 8px !important;
+    padding: 8px !important;
     color: #000000 !important; 
     font-weight: 500 !important;
+    font-size: 15px !important;
 }
 
 /* Dropdown menu options */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important; 
+    font-size: 15px !important;
 }
 
 /* Dataset preview box */
 .stDataFrameContainer, .element-container {
-    background-color: #fff8f0 !important; 
+    background-color: #fdf6e3 !important; 
     border-radius: 8px;
-    padding: 8px;
-    box-shadow: 0px 2px 6px rgba(0,0,0,0.05);
+    padding: 12px;
 }
 
-/* Table cells */
+/* Table headers */
 .stDataFrame th {
     background-color: #fddde6 !important; 
     color: #000000 !important; 
     font-weight: 700 !important;
 }
+
+/* Table cells */
 .stDataFrame td {
-    background-color: #fff8f0 !important; 
+    background-color: #fdf6e3 !important; 
     color: #000000 !important;
+    font-size: 14px !important;
 }
 
 /* Predict button */
@@ -76,8 +80,9 @@ div.stButton > button:first-child {
     color: white !important;
     font-weight: bold !important;
     border-radius: 8px !important;
-    padding: 10px 20px !important;
+    padding: 10px 24px !important;
     border: none !important;
+    font-size: 16px !important;
 }
 div.stButton > button:first-child:hover {
     background-color: #36527a !important;
@@ -145,26 +150,24 @@ st.subheader("Enter your details:")
 
 # User input
 user_input = {}
-cols = st.columns(2)  # two-column layout
-for i, c in enumerate(feature_cols):
-    with cols[i % 2]:
-        if c in num_features:
-            col_series = df[c].dropna()
-            min_val = float(col_series.min())
-            max_val = float(col_series.max())
-            default_val = float(col_series.median())
-            step_val = 0.1 if (max_val - min_val) < 1 else 1.0
-            user_input[c] = st.number_input(
-                f"{c}",
-                min_value=min_val,
-                max_value=max_val,
-                value=default_val,
-                step=step_val,
-                format="%.2f"
-            )
-        else:
-            options = df[c].dropna().unique().tolist()
-            user_input[c] = st.selectbox(f"{c}", options)
+for c in feature_cols:
+    if c in num_features:
+        col_series = df[c].dropna()
+        min_val = float(col_series.min())
+        max_val = float(col_series.max())
+        default_val = float(col_series.median())
+        step_val = 0.1 if (max_val - min_val) < 1 else 1.0
+        user_input[c] = st.number_input(
+            f"{c}",
+            min_value=min_val,
+            max_value=max_val,
+            value=default_val,
+            step=step_val,
+            format="%.2f"
+        )
+    else:
+        options = df[c].dropna().unique().tolist()
+        user_input[c] = st.selectbox(f"{c}", options)
 
 # Predict
 if st.button("Predict"):
