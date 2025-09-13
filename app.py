@@ -10,9 +10,9 @@ from sklearn.ensemble import RandomForestClassifier
 # --- Custom CSS ---
 st.markdown("""
 <style>
-/* Page background with gradient */
+/* Page background in mild peach */
 .stApp {
-    background: linear-gradient(135deg, #fbc531, #ff9ff3, #feca57);
+    background-color: #ffeedd;  /* light peach */
     color: #333333;
     font-family: 'Segoe UI', sans-serif;
 }
@@ -23,7 +23,7 @@ h1, h2, h3 {
     font-weight: 700 !important;
 }
 
-/* Uniform labels */
+/* Labels for input fields */
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
@@ -34,26 +34,17 @@ label, .stNumberInput label, .stSelectbox label {
     border-radius: 0 !important;
 }
 
-/* Selectbox styling */
-.stSelectbox div[data-baseweb="select"] {
-    border-radius: 6px !important;
-    border: 1px solid #cfd8dc !important;
-    padding: 4px !important;
-    background-color: #ffffff !important;
-    color: #000000 !important;
-}
-
-/* Input boxes uniform */
-.stNumberInput input, .stTextInput input {
+/* Input boxes styling */
+.stNumberInput input, .stTextInput input, .stSelectbox div[data-baseweb="select"] {
     background-color: #ffffff !important;
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    font-weight: 600;
+    font-weight: 600 !important;
     color: #000000 !important;
 }
 
-/* Prevent overlap */
+/* Consistent spacing */
 .stNumberInput, .stSelectbox, .stTextInput {
     margin-bottom: 18px !important;
 }
@@ -175,7 +166,7 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()  # 🎈 balloons when showing output
+        st.balloons()
     else:
         st.success("🙂 You do *not* appear to be showing strong signs of depression.")
         st.markdown("### Keep these up:")
@@ -188,4 +179,4 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()  # 🎈 balloons when showing output
+        st.balloons()
