@@ -28,7 +28,6 @@ h1, h2, h3, h4, h5, h6 {
 
 /* Labels */
 label, .stNumberInput label, .stSelectbox label {
-    display: block !important;
     font-weight: 700 !important;
     color: #000000 !important;  
     margin-bottom: 6px !important;
@@ -200,3 +199,4 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
+
