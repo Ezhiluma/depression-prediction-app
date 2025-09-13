@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS for uniform theme ---
+# --- Custom CSS: All inputs & dropdowns fully pink ---
 st.markdown("""
 <style>
 /* Page background sandal, text black */
@@ -29,38 +29,50 @@ label, .stNumberInput label, .stSelectbox label {
     font-weight: 700 !important;
 }
 
-/* Input boxes (uniform solid pink) */
-.stNumberInput input, .stTextInput input,
-.stSelectbox div[data-baseweb="select"],
-div[role="combobox"] {
-    background-color: #ffe6f0 !important; /* solid pink */
-    color: #000000 !important;  /* black text */
+/* Generic form input containers */
+.stTextInput, .stNumberInput, .stSelectbox {
+    background-color: #ffe6f0 !important; /* full pink */
     border: 1px solid #ffe6f0 !important;
     border-radius: 6px !important;
+    padding: 4px !important;
+}
+
+/* Text inside inputs */
+.stTextInput input, .stNumberInput input, .stSelectbox div {
+    background-color: #ffe6f0 !important;
+    color: #000000 !important;
+    border: none !important;
     font-weight: 500 !important;
 }
 
-/* Remove black +/- box for number inputs */
+/* +/- buttons in number input */
 .stNumberInput button {
-    background-color: #ffe6f0 !important; /* match input box */
+    background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: none !important;
 }
 
-/* Dropdown open menu also solid pink */
+/* Dropdown closed box */
+div[role="combobox"] {
+    background-color: #ffe6f0 !important;
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    color: #000000 !important;
+}
+
+/* Dropdown open menu */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
-    color: #000000 !important;
     border: 1px solid #ffe6f0 !important;
 }
 
-/* Dropdown options text black on pink */
+/* Dropdown options */
 div[data-baseweb="option"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
 }
 div[data-baseweb="option"]:hover {
-    background-color: #f5c6d6 !important; /* slightly darker pink on hover */
+    background-color: #f5c6d6 !important; /* darker pink on hover */
 }
 </style>
 """, unsafe_allow_html=True)
