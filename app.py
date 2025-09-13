@@ -23,51 +23,36 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: 700 !important;
 }
 
-/* Labels (topics) remain black */
-label, .stNumberInput label, .stSelectbox label {
+/* Labels (topics only black, no box) */
+.stMarkdown p, label, .stNumberInput label, .stSelectbox label {
+    background: none !important;
     color: #000000 !important;
     font-weight: 700 !important;
-    background: none !important; /* no pink background */
 }
 
-/* Input boxes */
-.stTextInput, .stNumberInput, .stSelectbox {
-    background-color: #ffe6f0 !important; /* pink box */
-    border: 1px solid #ffe6f0 !important;
-    border-radius: 6px !important;
-    padding: 4px !important;
-}
-
-/* Text inside inputs */
-.stTextInput input, .stNumberInput input, .stSelectbox div {
+/* Input boxes (all pink) */
+.stTextInput input, 
+.stNumberInput input, 
+.stSelectbox div[role="combobox"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
-    border: none !important;
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
     font-weight: 500 !important;
 }
 
-/* +/- buttons in number input */
+/* Number input +/- buttons */
 .stNumberInput button {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
     border: none !important;
 }
 
-/* Dropdown closed box */
-div[role="combobox"] {
-    background-color: #ffe6f0 !important;
-    border: 1px solid #ffe6f0 !important;
-    border-radius: 6px !important;
-    color: #000000 !important;
-}
-
-/* Dropdown open menu */
+/* Dropdown options */
 div[data-baseweb="popover"] {
     background-color: #ffe6f0 !important;
     border: 1px solid #ffe6f0 !important;
 }
-
-/* Dropdown options */
 div[data-baseweb="option"] {
     background-color: #ffe6f0 !important;
     color: #000000 !important;
@@ -76,7 +61,7 @@ div[data-baseweb="option"]:hover {
     background-color: #f5c6d6 !important;
 }
 
-/* Prediction result in white text */
+/* Prediction result in white */
 .result-text {
     color: #ffffff !important;
     font-weight: 700 !important;
