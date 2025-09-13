@@ -14,12 +14,18 @@ st.markdown("""
 .stApp {
     background-color: #f5e6cc;  /* sandal / light peach */
     font-family: 'Segoe UI', sans-serif;
-    color: #444444; /* mild grey for normal text */
+    color: #444444; /* mild grey for general text */
 }
 
-/* Titles (not black, mild blue/grey) */
-h1, h2, h3, h4, h5, h6 {
+/* Main title (colored) */
+h1 {
     color: #4a6fa5 !important; /* soft blue */
+    font-weight: 700 !important;
+}
+
+/* Subheaders / Topics */
+h2, h3, h4, h5, h6 {
+    color: #000000 !important; /* black */
     font-weight: 700 !important;
 }
 
@@ -27,7 +33,7 @@ h1, h2, h3, h4, h5, h6 {
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
-    color: #000000 !important;  /* ONLY labels are black */
+    color: #000000 !important;  /* black */
     margin-bottom: 6px !important;
     background: transparent !important;
     padding: 0 !important;
@@ -40,7 +46,7 @@ label, .stNumberInput label, .stSelectbox label {
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    color: #333333 !important; /* dark grey text */
+    color: #333333 !important; /* grey text */
     font-weight: 500 !important;
 }
 
@@ -53,10 +59,16 @@ div[data-baseweb="popover"] {
 /* Prediction messages box */
 .stAlert {
     background-color: #ffe6f0 !important; /* light pink */
-    color: #333333 !important;  /* grey text */
+    color: #333333 !important;
     border-radius: 12px;
     padding: 12px;
     font-weight: 600;
+}
+
+/* Dataset preview (light theme, no black background) */
+.stDataFrame div {
+    background-color: #ffffff !important;
+    color: #000000 !important;
 }
 </style>
 """, unsafe_allow_html=True)
