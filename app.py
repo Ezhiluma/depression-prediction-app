@@ -19,25 +19,30 @@ def train_model(df, target, cat_features, num_features):
     model.fit(X, y)
     return model
 
-# Custom CSS
+# Custom CSS for uniform look
 st.markdown("""
 <style>
 /* Background */
-body, .stApp {
+.stApp {
     background-color: #faebd7; /* sandal */
-    color: black;
+    color: black !important;
 }
 
-/* Uniform pink input boxes */
+/* All text black */
+* {
+    color: black !important;
+}
+
+/* Input boxes uniform pink */
 .stNumberInput input, .stSelectbox div[data-baseweb="select"], 
 .stTextInput input, .stTextArea textarea {
     background-color: #ffe4ef !important;
     color: black !important;
     border-radius: 8px;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #d3d3d3 !important;
 }
 
-/* Table style */
+/* Dataset preview uniform */
 [data-testid="stDataFrame"] {
     background-color: #faebd7 !important;
     color: black !important;
@@ -45,10 +50,10 @@ body, .stApp {
 
 /* Buttons */
 .stButton>button {
-    background-color: #ffe4ef;
-    color: black;
+    background-color: #ffe4ef !important;
+    color: black !important;
     border-radius: 8px;
-    border: 1px solid #d3d3d3;
+    border: 1px solid #d3d3d3 !important;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -86,7 +91,7 @@ if st.button("Predict"):
     model = train_model(df, target_column, cat_features, num_features)
     input_df = pd.DataFrame([user_input])
 
-    # Ensure same encoding as training
+    # Match encoding
     input_encoded = pd.get_dummies(input_df[cat_features + num_features])
     train_encoded = pd.get_dummies(df[cat_features + num_features])
     input_encoded = input_encoded.reindex(columns=train_encoded.columns, fill_value=0)
