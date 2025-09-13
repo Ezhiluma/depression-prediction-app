@@ -10,26 +10,25 @@ from sklearn.ensemble import RandomForestClassifier
 # --- Custom CSS ---
 st.markdown("""
 <style>
-/* Page background in mild light pink */
+/* Page background */
 .stApp {
-    background-color: #ffe6f0;  /* light pink */
-    color: #333333;
+    background-color: #f5e6cc;  /* sandal / light peach */
     font-family: 'Segoe UI', sans-serif;
 }
 
 /* Titles */
-h1, h2, h3 {
+h1, h2, h3, h4, h5, h6 {
     color: #000000 !important;
     font-weight: 700 !important;
 }
 
-/* Input field labels */
+/* Labels (questions/topics) */
 label, .stNumberInput label, .stSelectbox label {
     display: block !important;
     font-weight: 700 !important;
     color: #000000 !important;
     margin-bottom: 6px !important;
-    background: transparent !important;  /* remove colored box */
+    background: transparent !important;  /* remove black box */
     padding: 0 !important;
     border-radius: 0 !important;
 }
@@ -40,32 +39,23 @@ label, .stNumberInput label, .stSelectbox label {
     border: 1px solid #cfd8dc !important;
     border-radius: 6px !important;
     padding: 6px !important;
-    font-weight: 600 !important;
+    color: #000000 !important;
+    font-weight: 500 !important;
+}
+
+/* Dropdown menu options */
+div[data-baseweb="popover"] {
+    background-color: #ffffff !important;
     color: #000000 !important;
 }
 
-/* Spacing */
-.stNumberInput, .stSelectbox, .stTextInput {
-    margin-bottom: 18px !important;
-}
-
-/* Buttons */
-div.stButton > button:first-child {
-    background-color: #f78da7;
-    color: #ffffff;
-    border-radius: 8px;
-    padding: 6px 12px;
-    font-weight: bold;
-    border: none;
-}
-div.stButton > button:first-child:hover {
-    background-color: #d94f73;
-}
-
-/* Alerts */
+/* Prediction messages box */
 .stAlert {
+    background-color: #ffe6f0 !important; /* light pink */
+    color: #000000 !important;
     border-radius: 12px;
-    padding: 10px;
+    padding: 12px;
+    font-weight: 600;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -89,6 +79,7 @@ def train_model(df, target_column, cat_features, num_features):
     num_transformer = Pipeline([
         ("scaler", StandardScaler())
     ])
+
     preprocessor = ColumnTransformer([
         ("cat", cat_transformer, cat_features),
         ("num", num_transformer, num_features)
@@ -101,34 +92,32 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
-# --- Main App ---
+# --- Main Streamlit App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
 
-# Load dataset
 data_path = "depression.csv"
 if not os.path.exists(data_path):
     st.error(f"Dataset {data_path} not found in app folder.")
     st.stop()
 
 df = load_default_data(data_path)
-
-st.write("### Dataset preview:")
+st.subheader("Dataset preview:")
 st.write(df.head())
 
-# Define features
 target_column = "Depression"
 if target_column not in df.columns:
     st.error(f"Target column '{target_column}' not found.")
     st.stop()
 
+# Features
 feature_cols = [c for c in df.columns if c != target_column]
 cat_features = [c for c in feature_cols if not pd.api.types.is_numeric_dtype(df[c])]
 num_features = [c for c in feature_cols if pd.api.types.is_numeric_dtype(df[c])]
 
 st.subheader("Enter your details:")
 
-# User input form
+# User input
 user_input = {}
 for c in feature_cols:
     if c in num_features:
@@ -166,7 +155,7 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()
+        st.balloons()  # 🎈 balloons fly
     else:
         st.success("🙂 You do *not* appear to be showing strong signs of depression.")
         st.markdown("### Keep these up:")
@@ -179,4 +168,4 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()
+        st.balloons()  # 🎈 balloons fly
