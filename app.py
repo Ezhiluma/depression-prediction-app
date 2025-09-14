@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS Fix: dropdown text black, number input fix, dataset box ---
+# --- Custom CSS ---
 st.markdown("""
 <style>
 /* Page background sandal, text black */
@@ -16,15 +16,6 @@ st.markdown("""
     color: #000000 !important;
     font-family: 'Segoe UI', sans-serif;
 }
-/* Dataset preview box styling */
-.dataset-box {
-    background-color: #000000 !important;  /* black background */
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    color: #ffffff !important; /* white text so it's visible */
-}
-
 
 /* Titles */
 h1, h2, h3, h4, h5, h6 {
@@ -50,11 +41,11 @@ label, .stNumberInput label, .stSelectbox label {
     font-weight: 500 !important;
 }
 
-/* Remove black background from + - buttons */
+/* Remove black box from +/- buttons */
 .stNumberInput button {
-    background-color: transparent !important;
-    border: none !important;
+    background-color: #ffe6f0 !important;
     color: #000000 !important;
+    border: none !important;
 }
 
 /* Dropdown CLOSED box */
@@ -64,12 +55,12 @@ div[data-baseweb="select"] > div {
     border-radius: 6px !important;
     min-height: 45px !important;
     font-size: 16px !important;
-    color: #000000 !important;
+    color: #000000 !important;   /* black text */
 }
 
 /* Force dropdown SELECTED value text */
 div[data-baseweb="select"] * {
-    color: #000000 !important;
+    color: #000000 !important;   /* black text */
     font-size: 16px !important;
     font-weight: 500 !important;
 }
@@ -84,7 +75,7 @@ div[data-baseweb="popover"] {
 /* Dropdown options */
 div[data-baseweb="option"] {
     background-color: #ffe6f0 !important;
-    color: #000000 !important;
+    color: #000000 !important;   /* black text in options */
     font-size: 16px !important;
 }
 div[data-baseweb="option"]:hover {
@@ -104,13 +95,15 @@ div[data-baseweb="option"]:hover {
 
 /* Dataset preview box styling */
 .dataset-box {
-    background-color: #cce7ff !important;  /* sky blue */
+    background-color: #87CEEB !important;  /* sky blue */
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
+    color: #000000 !important; /* black text */
 }
 </style>
 """, unsafe_allow_html=True)
+
 
 # --- Cache dataset loading ---
 @st.cache_data
@@ -118,6 +111,7 @@ def load_default_data(path):
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
+
 
 # --- Cache model training ---
 @st.cache_data
@@ -144,6 +138,7 @@ def train_model(df, target_column, cat_features, num_features):
     clf.fit(X, y)
     return clf
 
+
 # --- Main Streamlit App ---
 st.set_page_config(page_title="Depression Predictor", layout="centered")
 st.title("Depression Prediction App")
@@ -155,7 +150,6 @@ if not os.path.exists(data_path):
 
 df = load_default_data(data_path)
 
-# Dataset preview in sky blue box
 st.subheader("Dataset preview:")
 st.markdown('<div class="dataset-box">', unsafe_allow_html=True)
 st.write(df.head())
@@ -223,5 +217,4 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
-        st.balloons()
-
+        st.balloons()   # 🎈 Balloons only when NO depression
