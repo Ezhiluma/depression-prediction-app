@@ -7,7 +7,7 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# --- Custom CSS Fix: dropdown text black ---
+# --- Custom CSS Fix: dropdown text black, number input fix, dataset box ---
 st.markdown("""
 <style>
 /* Page background sandal, text black */
@@ -41,6 +41,13 @@ label, .stNumberInput label, .stSelectbox label {
     font-weight: 500 !important;
 }
 
+/* Remove black background from + - buttons */
+.stNumberInput button {
+    background-color: transparent !important;
+    border: none !important;
+    color: #000000 !important;
+}
+
 /* Dropdown CLOSED box */
 div[data-baseweb="select"] > div {
     background-color: #ffe6f0 !important;
@@ -48,12 +55,12 @@ div[data-baseweb="select"] > div {
     border-radius: 6px !important;
     min-height: 45px !important;
     font-size: 16px !important;
-    color: #000000 !important;   /* BLACK text */
+    color: #000000 !important;
 }
 
 /* Force dropdown SELECTED value text */
 div[data-baseweb="select"] * {
-    color: #000000 !important;   /* BLACK text everywhere */
+    color: #000000 !important;
     font-size: 16px !important;
     font-weight: 500 !important;
 }
@@ -68,7 +75,7 @@ div[data-baseweb="popover"] {
 /* Dropdown options */
 div[data-baseweb="option"] {
     background-color: #ffe6f0 !important;
-    color: #000000 !important;   /* BLACK text in options */
+    color: #000000 !important;
     font-size: 16px !important;
 }
 div[data-baseweb="option"]:hover {
@@ -84,6 +91,14 @@ div[data-baseweb="option"]:hover {
     font-weight: 700 !important;
     border-radius: 8px !important;
     padding: 8px 16px !important;
+}
+
+/* Dataset preview box styling */
+.dataset-box {
+    background-color: #cce7ff !important;  /* sky blue */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 </style>
 """, unsafe_allow_html=True)
@@ -130,8 +145,12 @@ if not os.path.exists(data_path):
     st.stop()
 
 df = load_default_data(data_path)
+
+# Dataset preview in sky blue box
 st.subheader("Dataset preview:")
+st.markdown('<div class="dataset-box">', unsafe_allow_html=True)
 st.write(df.head())
+st.markdown('</div>', unsafe_allow_html=True)
 
 target_column = "Depression"
 if target_column not in df.columns:
@@ -183,7 +202,6 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
-        
     else:
         st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
@@ -197,4 +215,3 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
-
