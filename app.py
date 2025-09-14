@@ -7,32 +7,112 @@ from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from sklearn.ensemble import RandomForestClassifier
 
-# Cache dataset loading
+# --- Custom CSS Fix: dropdown text black ---
+st.markdown("""
+<style>
+/* Page background sandal, text black */
+.stApp {
+    background-color: #f5e6cc !important;
+    color: #000000 !important;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Titles */
+h1, h2, h3, h4, h5, h6 {
+    color: #000000 !important;
+    font-weight: 700 !important;
+}
+
+/* Labels */
+label, .stNumberInput label, .stSelectbox label {
+    color: #000000 !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+}
+
+/* Text/Number inputs */
+.stTextInput input, .stNumberInput input {
+    background-color: #ffe6f0 !important;
+    color: #000000 !important;
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    padding: 10px 12px !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+/* Dropdown CLOSED box */
+div[data-baseweb="select"] > div {
+    background-color: #ffe6f0 !important;
+    border: 1px solid #ffe6f0 !important;
+    border-radius: 6px !important;
+    min-height: 45px !important;
+    font-size: 16px !important;
+    color: #000000 !important;   /* BLACK text */
+}
+
+/* Force dropdown SELECTED value text */
+div[data-baseweb="select"] * {
+    color: #000000 !important;   /* BLACK text everywhere */
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+/* Dropdown expanded menu */
+div[data-baseweb="popover"] {
+    background-color: #ffe6f0 !important;
+    border: 1px solid #ffe6f0 !important;
+    font-size: 16px !important;
+}
+
+/* Dropdown options */
+div[data-baseweb="option"] {
+    background-color: #ffe6f0 !important;
+    color: #000000 !important;   /* BLACK text in options */
+    font-size: 16px !important;
+}
+div[data-baseweb="option"]:hover {
+    background-color: #f5c6d6 !important;
+    color: #000000 !important;
+}
+
+/* Predict button */
+.stButton button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    font-size: 16px !important;
+    font-weight: 700 !important;
+    border-radius: 8px !important;
+    padding: 8px 16px !important;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# --- Cache dataset loading ---
 @st.cache_data
 def load_default_data(path):
     df = pd.read_csv(path)
     df.columns = df.columns.str.strip()
     return df
 
-# Cache model training
+# --- Cache model training ---
 @st.cache_data
 def train_model(df, target_column, cat_features, num_features):
     X = df[cat_features + num_features]
     y = df[target_column]
-    
+
     cat_transformer = Pipeline([
         ("ohe", OneHotEncoder(handle_unknown='ignore', sparse_output=False))
     ])
-    
     num_transformer = Pipeline([
         ("scaler", StandardScaler())
     ])
-    
+
     preprocessor = ColumnTransformer([
         ("cat", cat_transformer, cat_features),
         ("num", num_transformer, num_features)
     ])
-    
+
     clf = Pipeline([
         ("preprocessor", preprocessor),
         ("classifier", RandomForestClassifier())
@@ -50,7 +130,7 @@ if not os.path.exists(data_path):
     st.stop()
 
 df = load_default_data(data_path)
-st.write("Dataset preview:")
+st.subheader("Dataset preview:")
 st.write(df.head())
 
 target_column = "Depression"
@@ -84,8 +164,6 @@ for c in feature_cols:
         )
     else:
         options = df[c].dropna().unique().tolist()
-        if len(options) == 0:
-            options = ["Unknown"]
         user_input[c] = st.selectbox(f"{c}", options)
 
 # Predict
@@ -95,7 +173,7 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.error("⚠ You may be experiencing symptoms of depression.")
+        st.markdown("⚠ **You may be experiencing symptoms of depression.**")
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -105,11 +183,9 @@ if st.button("Predict"):
             "Remember: You are not alone 💙"
         ]:
             st.markdown(f"- ✅ {msg}")
-
-        # ❌ No balloons, no snow here
-
+        
     else:
-        st.success("🙂 You do *not* appear to be showing strong signs of depression.")
+        st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
@@ -120,41 +196,5 @@ if st.button("Predict"):
             "If things change, it’s okay to reach out for help."
         ]:
             st.markdown(f"- ✅ {msg}")
-
-        # 🎈 Balloons only when no depression
         st.balloons()
 
-    # 🎊 Extra confetti animation (always runs)
-    confetti_js = """
-    <script>
-    function throwConfetti() {
-      var duration = 3 * 1000;
-      var end = Date.now() + duration;
-
-      (function frame() {
-        confetti({
-          particleCount: 5,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0 }
-        });
-        confetti({
-          particleCount: 5,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1 }
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      }());
-    }
-    throwConfetti();
-    </script>
-    """
-    st.components.v1.html(
-        '<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>'
-        + confetti_js,
-        height=0, width=0
-    )
