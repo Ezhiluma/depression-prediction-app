@@ -16,6 +16,15 @@ st.markdown("""
     color: #000000 !important;
     font-family: 'Segoe UI', sans-serif;
 }
+/* Dataset preview box styling */
+.dataset-box {
+    background-color: #000000 !important;  /* black background */
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    color: #ffffff !important; /* white text so it's visible */
+}
+
 
 /* Titles */
 h1, h2, h3, h4, h5, h6 {
@@ -215,3 +224,4 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()
+
