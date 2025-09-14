@@ -94,8 +94,7 @@ div[data-baseweb="option"]:hover {
 }
 
 /* Dataset preview box styling */
-.dataset-box {
-    background-color: #87CEEB !important;  /* sky blue */
+.dataset-box{
     padding: 15px;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -218,3 +217,4 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()   # 🎈 Balloons only when NO depression
+
