@@ -194,7 +194,7 @@ if st.button("Predict"):
     pred = model.predict(input_df)[0]
 
     if pred == 1:
-        st.markdown("⚠ **You may be experiencing symptoms of depression.**")
+        st.markdown("⚠ You may be experiencing symptoms of depression.")
         st.markdown("### Suggestions:")
         for msg in [
             "Talk to a trusted friend or family member",
@@ -205,7 +205,7 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
     else:
-        st.markdown("🙂 **You do *not* appear to be showing strong signs of depression.**")
+        st.markdown("🙂 You do not appear to be showing strong signs of depression.")
         st.markdown("### Keep these up:")
         for msg in [
             "Good sleep, balanced meals, and regular rest help maintain mental health.",
@@ -217,4 +217,5 @@ if st.button("Predict"):
         ]:
             st.markdown(f"- ✅ {msg}")
         st.balloons()   # 🎈 Balloons only when NO depression
+
 
